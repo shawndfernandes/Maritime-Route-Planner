@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Maritime SeaWeather & Weather.com Pathfinder</title>
+  <link href="cesium/Widgets/widgets.css" rel="stylesheet" />
+  <script src="cesium/Cesium.js"></script>
+  <style>
+    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: system-ui, sans-serif; background: #040d1a; color: #fff; }
+    #cesiumContainer { width: 100%; height: 74%; }
+    #hud { position: absolute; top: 14px; left: 14px; z-index: 10; background: rgba(6, 20, 38, 0.94); padding: 14px; border-radius: 8px; border: 1px solid #1e3a5f; width: 430px; box-shadow: 0 8px 24px rgba(0,0,0,0.55); }
+    .row { display: flex; gap: 6px; margin-bottom: 7px; align-items: center; }
+    select, input[type="text"], input:not([type]) { flex: 1; padding: 7px; border-radius: 4px; border: 1px solid #2b4c7e; background: #0c2340; color: #fff; font-size: 12px; min-width: 0; }
+    button { padding: 6px 10px; border-radius: 4px; border: 1px solid #2b4c7e; background: #0c2340; color: #bae6fd; font-weight: 700; cursor: pointer; font-size: 11.5px; }
+    button.primary { background: #0284c7; border: none; color: #fff; }
+    button.active { background: #0369a1; border-color: #38bdf8; color: #fff; }
+    .sea-box { margin: 6px 0; padding: 8px; background: #082f49; border: 1px solid #0284c7; border-radius: 6px; font-size: 11.5px; line-height: 1.45; }
+    #card { display: none; margin-top: 8px; padding: 10px; background: #0c2340; border-radius: 6px; border-left: 4px solid #38bdf8; font-size: 12px; line-height: 1.5; }
+    #profilePanel { width: 100%; height: 26%; background: #061426; border-top: 1px solid #1e3a5f; padding: 8px 16px; box-sizing: border-box; }
+    canvas { width: 100%; height: 84%; background: #020813; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div id="hud">
+    <h3 style="margin:0 0 8px 0; font-size:15px;">Maritime SeaWeather & Weather.com Pathfinder</h3>
+    <div class="row">
+      <select id="origPort" title="Origin Port"></select>
+      <select id="destPort" title="Destination Port"></select>
+      <input id="vesselSpeedInput" type="number" min="5" max="35" value="18" title="Vessel Cruise Speed (Knots)" style="flex:0 0 54px; text-align:center;" />
+      <span style="font-size:11px; color:#7dd3fc;">kt</span>
+      <button class="primary" onclick="planVoyage()">Sail Route</button>
+    </div>
+    <div class="row">
+      <button class="map-tab active" onclick="setMaritimeMapLayer('hybrid', this)">Hybrid</button>
+      <button class="map-tab" onclick="setMaritimeMapLayer('roadmap', this)">Roadmap</button>
+      <button class="map-tab" onclick="setMaritimeMapLayer('satellite', this)">Satellite</button>
+      <button class="map-tab" onclick="setMaritimeMapLayer('terrain', this)">Terrain</button>
+    </div>
+    <div class="row">
+      <button class="active" onclick="toggleSeaCharts(this)">SeaWeather Charts: ON</button>
+      <button class="active" onclick="toggleMarineRadar(this)">Weather.com Radar: ON</button>
+      <button onclick="toggleMarineRadarAnim(this)">▶ Animate</button>
+    </div>
+    <div class="row">
+      <span style="font-size:11px; color:#7dd3fc;">Radar Opacity:</span>
+      <input type="range" min="0" max="100" value="75" style="flex:1; accent-color:#38bdf8;" oninput="setMarineRadarOpacity(this.value)" />
+    </div>
+    <div id="seaWeatherCard" class="sea-box">Loading SeaWeather Wave/Swell & Weather.com Marine Radar...</div>
+    <div id="status" style="font-size:11.5px; color:#7dd3fc;">Loading marine storm warnings & AIS vessels...</div>
+    <div id="card"></div>
+  </div>
+  <div id="cesiumContainer"></div>
+  <div id="profilePanel">
+    <div style="font-size:12px; color:#bae6fd; margin-bottom:4px;">Significant Wave Height (meters) & Swell Period (seconds) Along Sea Route</div>
+    <canvas id="waveChart"></canvas>
+  </div>
+  <script type="module" src="maritime_app.js"></script>
+</body>
+</html>

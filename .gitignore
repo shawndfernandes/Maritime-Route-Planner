@@ -1,0 +1,24 @@
+# Python Virtual Environment & Bytecode
+venv/
+backend/venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Local CesiumJS Assets & Cached Natural Earth GeoJSON
+frontend/cesium
+frontend/cesium/
+backend/data/*.geojson
+*.zip
+
+# Environment Variables & Secrets
+.env
+backend/.env
+*.env.local
+
+# Logs & OS Artifacts
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,7 @@
+maritime-route-engine/frontend/
+├── index.html             # Loads maritime_app.js as type="module"
+├── maritime_map.js        # Module 1: CesiumJS Globe, SeaWeather Nautical Charts & Radar Loop
+├── maritime_chart.js      # Module 2: 2D Significant Wave Height & Swell Period Canvas
+├── maritime_renderer.js   # Module 3: Live AIS Ship Icons, Ports, Marine Storms & Voyage Paths
+└── maritime_app.js        # Module 4: HUD Event Listeners, Voyage Routing & Snapshot Loop
+
