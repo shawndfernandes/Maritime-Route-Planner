@@ -39,8 +39,13 @@ export function initMaritimeGlobe(containerId) {
   });
   viewer.camera.setView({ destination: Cesium.Cartesian3.fromDegrees(-40.0, 38.0, 5500000) });
 
+  viewer.scene.screenSpaceCameraController.minimumZoomDistance = 250.0;
   const seaChartLayer = viewer.imageryLayers.addImageryProvider(
-    new Cesium.UrlTemplateImageryProvider({ url: seaChartUrl, credit: "OpenSeaMap / SeaWeather" })
+    new Cesium.UrlTemplateImageryProvider({
+      url: seaChartUrl,
+      maximumLevel: 18,
+      credit: "OpenSeaMap / SeaWeather"
+    })
   );
   seaChartLayer.alpha = 0.85;
 
@@ -132,7 +137,10 @@ export class MarineRadarController {
     }
     if (!this.enabled) return;
     this.layer = this.viewer.imageryLayers.addImageryProvider(
-      new Cesium.UrlTemplateImageryProvider({ url: frame.tile_url })
+      new Cesium.UrlTemplateImageryProvider({
+        url: frame.tile_url,
+        maximumLevel: 7
+      })
     );
     this.layer.alpha = this.alpha;
     if (this.seaChartLayer) {
